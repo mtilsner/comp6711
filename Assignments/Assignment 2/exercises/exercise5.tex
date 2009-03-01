@@ -1,0 +1,50 @@
+\section{Provide a denotational semantics for ``for'' loops given in Assignment 1.}
+\begin{align}
+    & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}  \\
+=   & \dsstmt{i=0; \forloop{i=i+E_1}{E_2}{E_3}{St}}   \\
+=   & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0} \\
+=		& \dscond{\dsbool{i < E_2}}
+						 {\dsstmt{St: \forloop{i=i+E_1}{E_2}{E_3}{St}}}
+						 {\text{id}} 
+		  \circ \dsstmt{i=0} \\
+=		& \dscond{\dsbool{i < E_2}}
+						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
+						 {\text{id}} 
+			\circ \dsstmt{i=0}
+\end{align}
+Therefore:
+\begin{align}
+	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0} \\
+=		& \dscond{\dsbool{i < E_2}}
+						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
+						 {\text{id}} 
+			\circ \dsstmt{i=0}
+\end{align}
+Or short:
+\begin{align}
+	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \\
+=		& \dscond{\dsbool{i < E_2}}
+						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
+						 {\text{id}} 
+\end{align}
+By expressing this as a fixed point of the functional $F$ we get
+\begin{align}
+	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \\
+=   & \dsfix{F} \\
+		& \text{where } F g = \dscond{\dsbool{i < E_2}}
+																 {g \circ \dsstmt{St}}
+																 {\text{id}} 
+\end{align}
+Since
+\begin{align}
+    & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}   \\
+=   & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0}
+\end{align}
+We finally get for the denotational semantic of the \emph{for} loop:
+\begin{align}
+    & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}   \\
+=   & \dsfix{F} \circ s[i \to \dsasgn{0}s] \\
+		& \text{where } F g = \dscond{\dsbool{i < E_2}}
+																 {g \circ \dsstmt{St}}
+																 {\text{id}} 
+\end{align}

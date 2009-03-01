@@ -1,0 +1,37 @@
+\section{Let $D$ be a cpo. An element $x \in D$ is called compact if for every ascending chain $S \subseteq D$ one has: $x \sqcup S$ implies $x \leq s$ for some $s \in S$. Show that if $x$ and $y$ are compact and they have a least upper bound in $D$, then the least upper bound is also compact.}
+
+Since x and y are compact, it is given that for all ascending chains $C \subseteq D$
+\begin{align}
+	& \text{if } x \leq \sqcup C \text{ then } \exists c \in C \text{ such that } x \leq c \label{eq:compact:definition}
+\end{align}
+with the same being true for y instead of x. \\
+Let's say there is a least upper bound p for \{x, y\} such that
+\begin{align}
+	& x \leq p \wedge y \leq p \label{eq:lub:relationXY}
+\end{align}
+Assume p is not compact, it must be that $\exists C_i \subseteq D$ so that
+\begin{align}
+	& p \leq \sqcup C_i \label{eq:lub:compact:req1} \\
+	& \nexists c \in C_i \text{ such that } p \leq c \label{eq:lub:compact:req2}
+\end{align}
+Due to equation \ref{eq:lub:relationXY} and \ref{eq:lub:compact:req1}, it must be that
+\begin{align}
+	& x \leq \sqcup C_i \wedge y \leq \sqcup C_i
+\end{align}
+Since x and y are compact and due to equation \ref{eq:compact:definition}, it must also be true that
+\begin{align}
+	& \exists c_1 \in C_i \text{ such that } x \leq c_1 \\
+	& \exists c_2 \in C_i \text{ such that } y \leq c_2
+\end{align}
+With $c_1$ and $c_2$ being elements of the same ascending chain, it is that 
+\begin{align}
+							& \exists c_i \in C_i = \sqcup \{c_1, c_2\} \\
+	\Rightarrow & x \leq c_i \wedge y \leq c_i \\
+	\Rightarrow & c_i \text{ is an upper bound of } \{x, y\}
+\end{align}
+Since $p$ is established to be the least upper bound, it must be that
+\begin{align}
+						  & p \leq c_i \text{ with } c_i \in C_i \\
+	\Rightarrow & \exists c_i \in C_i \text{ such that } p \leq c_i
+\end{align}
+This contradicts equation \ref{eq:lub:compact:req2}, \textbf{thus forcing $p$ to be compact}!

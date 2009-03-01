@@ -1,0 +1,45 @@
+\section{For a cpo $D$, consider the function $Apply: [D \rightarrow D] \times D \rightarrow D$ for which $Apply (f, x) = f(x)$. Prove that $Apply$ is continuous.}
+
+Let $[D \rightarrow D]$ be the ccpo of continuous functions $F$ such that
+\begin{align}
+	& \sqcup ( f \text{ } D ) = f \text{ } \sqcup D \text{ } | \text{ } \forall f \in F \label{eq:cont:given:x}
+\end{align}
+$Apply$ can therefore be understood as
+\begin{align}
+	& Apply \text{: } F \times D \rightarrow D
+\end{align}
+Furthermore, since $F$ is a ccpo of continuous functions, it must be for all $f,g \in F$ that
+\begin{align}
+	& f \leq g \text{ if } f \text{ } x \leq g \text{ } x \text{ } \text{ } | \text{ } \forall x \in D 
+\end{align}
+which means that
+\begin{align}
+						& \sqcup ( f \text{ } x \text{ } | \text{ } \forall f in F ) = ( \sqcup F ) \text{ } x \text{ } | \text{ } \forall x \in D \\
+\Rightarrow	& \sqcup ( F \text{ } x ) = (\sqcup F) \text{ } x \text{ } | \text{ } \forall x \in D \label{eq:cont:given:f}
+\end{align}
+In order for $Apply$ to be continuous, it must be that
+\begin{align}
+	& \sqcup Apply \text{ } <f,x> = Apply \text{ } \sqcup <f,x>
+\end{align}
+Also, it is given that \emph{a function is continuous if it is continuous in each of its parameters}. Therefore, if $Apply$ is continuous in its parameters, it must be continuous itself as well. By fixing parameters, partially applied functions can be constructed that allow the examination of the properties (such as the continuity) of $Apply$ for the parameters that are not fixed. Consequently, by fixing $f$, the partially applied function $Apply_f$ can be constructed, that allows the evaluation of the continuity of $Apply$ in $x$. Respectively, $Apply_x$ allows the evaluation of the continuity of $Apply$ in $f$ by fixing $x$. If both $Apply_f$ and $Apply_x$ are contiuous, $Apply$ must be continuous, too. Now in order for $Apply_f$ and $Apply_x$ to be continuous, it must be true that
+\begin{align}
+	& \sqcup ( Apply_f \text{ } D ) = Apply_f \text{ } \sqcup D \text{ } | \text{ } \forall f \in F \label{eq:cont:req:x} \\
+	& \sqcup ( Apply_x \text{ } F ) = Apply_x \text{ } \sqcup F \text{ } | \text{ } \forall x \in D \label{eq:cont:req:f}
+\end{align}
+Since $Apply \text{ } (f,x) = f \text{ } x$, any $Apply_f \text{ } x$ can also be expressed as $f \text{ } x$. Thus, equation \ref{eq:cont:req:x} results to
+\begin{align}
+	& \sqcup ( f \text{ } D ) = f \text{ } \sqcup D \text{ } | \text{ } \forall f \in F
+\end{align}
+which is provided by equation \ref{eq:cont:given:x}. Consequently it is that $Apply_f$ is continuous, implying that	\textbf{$Apply$ is continuous in $x$}. \\
+Furthermore, $Apply \text{ } (f,x) = f \text{ } x$ requires that equation \ref{eq:cont:req:f} results to
+\begin{align}
+	& \sqcup ( F \text{ } x ) = (\sqcup F) \text{ } x \text{ } | \text{ } \forall x \in D
+\end{align}
+which is provided to equation \ref{eq:cont:given:f}. Consequently it is that $Apply_x$ is continuous, implying that
+\begin{conclusion}
+	$Apply$ is continuous in $f$
+\end{conclusion}
+Due to \textbf{Conclusion 1} and \textbf{Conclusion 2}, it must be true that
+\begin{conclusion}
+	$Apply$ is continuous
+\end{conclusion}

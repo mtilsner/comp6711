@@ -1,0 +1,30 @@
+
+\title{Assignment 1}
+\input{../assignmentTemplate.tex}
+
+%-----------denotational semantics commands-------------
+\newcommand{\dsstmt}[1]{\mathcal{S}_{ds}\llbracket #1 \rrbracket}
+\newcommand{\dsbool}[1]{\mathcal{B}\llbracket #1 \rrbracket}
+\newcommand{\dsasgn}[1]{\mathcal{A}\llbracket #1 \rrbracket}
+\newcommand{\dscond}[3]{\text{cond}(#1, #2, #3)}
+\newcommand{\dsfix}[1]{\text{FIX } #1}
+\newcommand{\forloop}[4]{\text{for } #1 \text{ to } #2 \text{ step } #3 \text{ do } #4}
+\newcommand{\whileloop}[2]{\text{while } #1 \text{ do } #2}
+%-----------denotational semantics commands-------------
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{conclusion}{Conclusion}
+
+\begin{document}
+\maketitle
+
+\numberwithin{equation}{section}
+
+\input{exercises/exercise1.tex}
+\input{exercises/exercise2.tex}
+\input{exercises/exercise3.tex}
+\input{exercises/exercise4.tex}
+\input{exercises/exercise5.tex}
+\input{exercises/exercise6.tex}
+
+\end{document}
