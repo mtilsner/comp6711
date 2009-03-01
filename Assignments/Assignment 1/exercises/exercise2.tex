@@ -1,0 +1,59 @@
+\section{Design an attribute grammar to translate case statements}
+
+For this exercise I assume that the symbol * in JUMP instruction refers to the location of the current location, meaning not the location of the JUMP instruction itself, but of the instruction following the JUMP statement. The command [JUMP *+1] consequently means \emph{jump to the instruction after next, thus skip the following instruction}
+Furthermore, I introduce the following mnemonics:
+\begin{itemize}
+	\item JUMPNE: JUMP on not equal to comparator
+\end{itemize}
+
+\subsection{Case Statements}
+\paragraph{Cs $\rightarrow$ case E of Cl}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E.temp 						\>= \>Cs.temp + 1\\
+	\>E.loc 						\>= \>Cs.loc \\
+	\>Cl.temp 					\>= \>Cs.temp + 2 \\
+	\>Cl.loc 						\>= \>Cs.loc + E.length + 1 \\
+	\>Cl.skipOnSuccess	\>= \>0 \\
+	\>Cl.comp 					\>= \>Cs.temp \\
+	\>Cs.code 					\>= \>E.code [STORE Cs.temp] Cl.code \\
+	\>Cs.length 				\>= \>E.length + 1 + Cl.length
+\end{tabbing}
+
+\subsection{Case lists}
+\paragraph{Cl$_{0}$ $\rightarrow$ Cl$_{1}$ ; I}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>Cl$_{1}$.temp 					\>= \>Cl$_{0}$.temp \\
+	\>Cl$_{1}$.loc 						\>= \>CL$_{0}$.loc \\
+	\>Cl$_{1}$.comp 					\>= \>Cl$_{0}$.comp \\
+	\>Cl$_{1}$.skipOnSuccess	\>= \>I.length \\
+	\>I.temp 									\>= \>Cl$_{0}$.temp + 1 \\
+	\>I.loc 									\>= \>Cl$_{0}$.loc + Cl$_{1}$length + 1 \\
+	\>I.skipOnSuccess 				\>= \>Cl$_{0}$.skipOnSuccess \\
+	\>I.comp									\>=	\>Cl$_{0}$.comp \\
+	\>Cl$_{0}$.code 					\>= \>Cl$_{1}$.code I.code \\
+	\>Cl$_{0}$.length 				\>= \>Cl$_{1}$.length
+\end{tabbing}
+
+\paragraph{Cl $\rightarrow$ I}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>I.temp					\>=	\>Cl.temp \\
+	\>I.loc 					\>= \>Cl.loc \\
+	\>I.skipOnSuccess \>= \>Cl.skipOnSuccess \\
+	\>I.comp					\>=	\>Cl.comp \\
+	\>Cl.code 				\>= \>I.code\\
+	\>Cl.length 			\>= \>I.length
+\end{tabbing}
+
+\subsection{Case items}
+\paragraph{I $\rightarrow$ n : St}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>St.temp		\>=	\>I.temp \\
+	\>St.loc 		\>=	\>I.loc + 3 \\
+	\>I.code 		\>=	\>[LOAD \#n.name] [COMP I.comp] [JUMPNE \emph{(*+St.length+1)}] \\
+	\>					\>	\>St.code [JUMP \emph{(*+I.skipOnSuccess)}] \\
+	\>I.length	\>=	\>4 + St.length
+\end{tabbing}

@@ -1,0 +1,76 @@
+\section{Design an attribute grammar to translate conditional arithmetic expressions}
+
+\subsection{Expressions}
+\paragraph{E$_{0}$ $\rightarrow$ E$_{1}$ + T}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{1}$.temp 		\>= \>E$_{0}$.temp \\
+	\>E$_{1}$.loc 		\>= \>E$_{0}$.loc \\
+	\>T.temp 					\>= \>E$_{0}$.temp + 1 \\
+	\>T.loc 					\>= \>E$_{0}$.loc + E$_{1}$.length \\
+	\>E$_{0}$.code 		\>= \>E$_{1}$.code [STORE E$_{0}$.temp] T.code [ADD E$_{0}$.temp] \\
+	\>E$_{0}$.length	\>= \>E$_{1}$.length + T.length + 2
+\end{tabbing}
+
+\paragraph{E $\rightarrow$ T}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>T.temp 		\>= \>E.temp \\
+	\>T.loc 		\>= \>E.loc \\
+	\>E.code 		\>= \>T.code \\
+	\>E.length	\>= \>T.length
+\end{tabbing}
+
+\subsection{Terms}
+\paragraph{T$_{0}$ $\rightarrow$ T$_{1}$ * F}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>T$_{1}$.temp		\>= \>T$_{0}$.temp \\
+	\>T$_{1}$.loc			\>= \>T$_{0}$.loc \\
+	\>F.temp					\>= \>T$_{0}$.temp + 1 \\
+	\>F.loc 					\>= \>T$_{0}$.loc + T$_{1}$.length \\
+	\>T$_{0}$.code 		\>= \>T$_{1}$.code [STORE T$_{0}$.temp] F.code [MULT T$_{0}$.temp] \\
+	\>T$_{0}$.length	\>= \>T$_{1}$.length + F.length + 2
+\end{tabbing}
+
+\paragraph{T $\rightarrow$ F}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>F.temp 		\>= \>T.temp \\
+	\>F.loc 		\>= \>T.loc \\
+	\>T.code 		\>= \>F.code \\
+	\>T.length 	\>= \>F.length
+\end{tabbing}
+
+\subsection{Factors}
+\paragraph{F $\rightarrow$ i}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>F.code		\>= \>[LOAD \#i.name] \\
+	\>F.length	\>= \>1
+\end{tabbing}
+
+\paragraph{F $\rightarrow$ (E)}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E.temp 		\>= \>F.temp \\
+	\>E.loc 		\>= \>F.loc \\
+	\>F.code		\>= \>E.code \\
+	\>F.length	\>= \>E.length
+\end{tabbing}
+
+\paragraph{F $\rightarrow$ if L then E$_{0}$ else E$_{1}$}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>L.temp				\>= \>F.temp \\
+	\>L.loc 				\>= \>F.loc \\
+	\>L.true 				\>= \>F.loc + L.length \\
+	\>L.false 			\>= \>F.loc + L.length + 1 + E$_{0}$.length \\
+	\>E$_{0}$.temp	\>= \>F.temp + 1 \\
+	\>E$_{0}$.loc 	\>= \>F.loc + L.length \\
+	\>E$_{1}$.temp	\>= \>F.temp + 2 \\
+	\>E$_{1}$.loc 	\>= \>F.loc + L.length + 1 + E$_{0}$.length \\
+	\>F.code 				\>= \>L.code E$_{0}$.code \\
+	\>							\>	\>[JUMP \emph{(F.loc + L.length + E$_{0}$.length + 1 + E$_{1}$.length)}] E$_{1}$.code \\
+	\>F.length 			\>= \>L.length + E$_{0}$.length + 1 + E$_{1}$.length
+\end{tabbing}

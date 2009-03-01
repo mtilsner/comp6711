@@ -1,0 +1,62 @@
+\section{Design an attribute grammar to translate gosub expressions}
+
+For this exercise I introduce the following mnemonics:
+\begin{itemize}
+	\item LOADVAL: LOAD provided parameter into accumulator
+	\item IJUMP: JUMP to value stored at address provided as parameter
+	\item JUMPZ: JUMP when accumulator is equal to zero
+\end{itemize}
+
+There are two different options for translating the goto statement. Option 1 assumes that labels may
+be used for jumps. Option 2 assumes, that all labeled statements are defined before using them and that
+\emph{i} is has a variable with an assigned storage available at \#i.loc assigned by the token parser.
+All occurences of the identical \emph{i} must have the same \#i.loc value, thus referencing the identical
+variable storage. In this option, the labeled statement will not be executed upon declaration, but only
+when it is called.
+
+\subsection{Expressions - Option 1}
+\paragraph{E $\rightarrow$ gosub i}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E.code			\>=	\>[LOADVAL \emph{(E.loc+3)}] [PUSH] [JUMP \#i.name] \\
+	\>E.length		\>=	\>3
+\end{tabbing}
+
+\subsection{Expressions - Option 2}
+\paragraph{E $\rightarrow$ gosub i}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E.code			\>=	\>[LOADVAL \emph{(E.loc+3)}] [PUSH] [IJUMP \#i.loc] \\
+	\>E.length		\>=	\>3
+\end{tabbing}
+
+\subsection{Labeled statements - Option 1}
+\paragraph{Lst $\rightarrow$ i St}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>St.temp			\>=	\>Lst.temp \\
+	\>St.loc			\>=	\>Lst.loc	\\
+	\>Lst.code		\>=	\>[\#i.name NOOP] St.code \\
+	\>Lst.length 	\>=	\>St.length + 1
+\end{tabbing}
+
+\subsection{Labeled statements - Option 2}
+\paragraph{Lst $\rightarrow$ i St}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>St.temp			\>=	\>Lst.temp \\
+	\>St.loc			\>=	\>Lst.loc	\\
+	\>Lst.code		\>=	\>[LOADVAL \emph{(Lst.loc+2)}] [STORE \#i.loc] [JUMP \emph{(Lst.loc + Lst.temp)}] St.code \\
+	\>Lst.length 	\>=	\>St.length + 3
+\end{tabbing}
+
+\subsection{Return statements}
+\paragraph{Rs $\rightarrow$ return (E)}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E.temp			\>=	\>Rs.temp + 1 \\
+	\>E.loc				\>=	\>Rs.loc + 2 \\
+	\>Rs.code			\>=	\>[POP] [JUMPZ \emph{(*+ E.length + 2)}] \\
+	\>						\>	\>[STORE Rs.temp] E.code [JUMP Rs.temp] [PUSH] \\
+	\>Rs.length		\>=	\>E.length + 5
+\end{tabbing}

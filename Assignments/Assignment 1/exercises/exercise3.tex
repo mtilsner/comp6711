@@ -1,0 +1,71 @@
+\section{Define an attribute grammar to translate C-Style expressions}
+
+For the following exercise I introduce the following mnemonics:
+\begin{itemize}
+	\item INC increment the value of the accumulator by one
+	\item DEC decrement the value of the accumulator by one
+\end{itemize}
+
+\subsection{Expressions}
+\paragraph{E$_{0}$ $\rightarrow$ E$_{1}$ + E$_{2}$}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{1}$.temp 			\>= \>E$_{0}$.temp \\
+	\>E$_{1}$.loc 			\>= \>E$_{0}$.loc \\
+	\>E$_{2}$.temp 			\>= \>E$_{0}$.temp + 1 \\
+	\>E$_{2}$.loc 			\>= \>E$_{0}$.loc + E$_{1}$.length \\
+	\>E$_{0}$.code			\>=	\>E$_{1}$.code [STORE E$_{0}$.temp] \\
+	\>									\>	\>E$_{2}$.code [ADD E$_{0}$.temp] \\
+	\>E$_{0}$.length		\>=	\>E$_{1}$.length + 2 + E$_{2}$.length
+\end{tabbing}
+
+\paragraph{E$_{0}$ $\rightarrow$ E$_{1}$ * E$_{2}$}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{1}$.temp 			\>= \>E$_{0}$.temp \\
+	\>E$_{1}$.loc 			\>= \>E$_{0}$.loc \\
+	\>E$_{2}$.temp 			\>= \>E$_{0}$.temp + 1 \\
+	\>E$_{2}$.loc 			\>= \>E$_{0}$.loc + E$_{1}$.length \\
+	\>E$_{0}$.code			\>=	\>E$_{1}$.code [STORE E$_{0}$.temp] \\
+	\>									\>	\>E$_{2}$.code [MULT E$_{0}$.temp] \\
+	\>E$_{0}$.length		\>=	\>E$_{1}$.length + 2 + E$_{2}$.length
+\end{tabbing}
+
+\paragraph{E$_{0}$ $\rightarrow$ (E$_{1}$)}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{1}$.temp 			\>= \>E$_{0}$.temp \\
+	\>E$_{1}$.loc 			\>= \>E$_{0}$.loc \\
+	\>E$_{0}$.code			\>=	\>E$_{1}$.code \\
+	\>E$_{0}$.length		\>=	\>E$_{1}$.length 
+\end{tabbing}
+
+\paragraph{E$_{0}$ $\rightarrow$ i}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{0}$.code			\>=	\>[LOAD \#i.name] \\
+	\>E$_{0}$.length		\>=	\>1
+\end{tabbing}
+
+\paragraph{E$_{0}$ $\rightarrow$ i := E$_{1}$}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{1}$.temp 			\>= \>E$_{0}$.temp \\
+	\>E$_{1}$.loc 			\>= \>E$_{0}$.loc \\
+	\>E$_{0}$.code			\>=	\>E$_{1}$.code [STORE \#i.name] \\
+	\>E$_{0}$.length		\>=	\>E$_{1}$.length + 1
+\end{tabbing}
+
+\paragraph{E$_{0}$ $\rightarrow$ i ++}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{0}$.code			\>=	\>[LOAD \#i.name] [INC] [STORE \#i.name] [DEC] \\
+	\>E$_{0}$.length		\>=	\>4
+\end{tabbing}
+
+\paragraph{E$_{0}$ $\rightarrow$ ++ i}
+\begin{tabbing}
+	\hspace*{0.5cm}\=\hspace*{3.3cm}\=\hspace*{0.5cm}\=\hspace*{10cm}\= \kill
+	\>E$_{0}$.code			\>=	\>[LOAD \#i.name] [INC] [STORE \#i.name] \\
+	\>E$_{0}$.length		\>=	\>3
+\end{tabbing}
