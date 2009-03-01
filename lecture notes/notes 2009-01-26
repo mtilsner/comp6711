@@ -1,0 +1,63 @@
+Expression: evaluate        D$_{evaluate}$: States $\rightarrow$ Z
+Statements: state-change    D$_{state-change}$: States $\leftarrow \rightarrow$ States
+States: Variables $\rightarrow$ Z
+
+E$_{1}$ $\rightarrow$ E$_{2}$ + E$_{3}$
+  E$_{1}$.evaluate = \lambda s \element States . E$_{2}$.evaluate(\middot} + E$_{3}$.evaluate(\middot}
+
+E $\rightarrow$ x
+  E.evaluate = \lambda s \element States . s(x)
+
+f(x) = x + s
+f = \lambda x . x + s
+
+
+A $\rightarrow$ x := E
+  A.state-change = \lambda s \element States . s [ x $\leftarrow$ E.evaluate(s) ]
+  
+  
+Cond $\rightarrow$ if L then St$_{1}$ else St$_{2}$
+  Cond.state-change = \lambda s \element States . cond( L.evaluate(s), St$_{1}$.state-change(s), St$_{2}$.state-change(s) )
+  
+  cond: Boolean x States x States $\rightarrow States
+  cond(b, s$_{1}%, s$_{2}$) = [(s$_{1}$ if b = true), (s$_{2}$ if b = false)]
+  
+  evaluate(L): States $\rightarrow$ Boolean
+  
+  
+  
+W $\rightarrow$ while L do St
+  W.state-change = \lambda s \element States . cond( L.evaluate(s), W.state-change( St.state-change(s) ), s )     |must be resolved to W.state-change
+               x = F( x )   fixed-point equation (assume that W.state-change is fixed point:
+                                                                                      x \element States $\rightarrow$ States
+                                                                                      F( States $\rightarrow$ States) $\rightarrow$ (States $\rightarrow$ States) )
+
+Partially ordered set (poset)
+  ( D, <= )
+  if a <= b and b <= a, then a = b
+  a <=$_up{R}$ b iff (if and only if) b <= a
+  
+  Hasse diagram
+  
+  minimal element
+    a \element D is minimal if \noelement b\element D b <= a
+  smallest element
+    a \element D such that a <= b \forall b \element D
+    
+f$_{1}$: State $\leftarrow \rightarrow$ Z
+f$_{2}$: State $\leftarrow \rightarrow$ Z
+
+  least upper bound
+    S c= D
+    \squarecup S = d \element D
+      such that d is an upper bound of S: \forall s \element S  s <= d
+                d is the smallest among all upper bounds
+                
+  (D, <=) is a complete lattice if:
+    \squarecup S exists for ass S c= D
+    
+  (D, <=) is chain complete (ccpo) if
+    all ascending chains have a least upper bound
+      -> S c= D is ascending chain if it is linearly ordered according to <=
+      
+  for empty sub-sets, everything is an upper bound

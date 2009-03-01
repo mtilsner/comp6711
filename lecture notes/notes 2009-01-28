@@ -1,0 +1,30 @@
+f:  D$_{1}$ $\rightarrow$ D$_{2}$       D$_{1}$, D$_{2}$ are ccpo's
+
+f is continuous if it posesses the least upper boud of non-empty chains
+=> f is monotone (D$_{1}$: x <= y, then D$_{2}$: f(x) <= f(y))
+   - all l.u.b must be preserved => no items may be inserted
+   
+D$_{1}$ x D$_{2}$ is a ccpo if D$_{1}$ and D$_{2}$ are such
+  (d$_{1}$, d$_{2}$) <= (d$_{1}$', d$_{2}$') if d$_{1}$ <= d$_{1}$' and d$_{2}$ <= d$_{2}$'
+              D$_{1}$ x D$_{2}$                       D$_{1}$                  D$_{2}$
+            
+  chain in D$_{1}$ x D$_{2}$
+  
+  C c= D$_{1}$ x D$_{2}$ is a chain
+    C$_{1}$ = { d$_{1}$ \element D$_{1}$ | J d$_{2}$ \element D$_{2}$ (d$_{1}$, d$_{2}$) \element C }
+    C$_{2}$ = { d$_{2}$ \element D$_{2}$ | J d$_{1}$ \element D$_{1}$ (d$_{1}$, d$_{2}$) \element C }
+    
+  |_| C = ( |_| C$_{1}$, |_| C$_{2}$ )
+  
+  f: D$_{1}$ $\rightarrow$ D$_{2}$    |
+                                      |- continues
+  g: D$_{2}$ $\rightarrow$ D$_{3}$    |
+  
+  g \circle f: D$_{1}$ $\rightarrow$ D$_{3}$  [g \circle f: g( f(d) )]
+  
+  if f and g are continuous, then f \circle g is continuous, too:
+    f: D$_{1}$ x D$_{2}$ $\rightarrow$ D
+       C$_{1}$ c= D$_{1}$
+       \forall d$_{2}$ \element D$_{2}$     f( |_| C$_{1}$, d$_{2}$) = |_| f(C$_{1}$, d$_{2}$) = |_| { f(d$_{1}$, d$_{2}$) | d$_{1}$ \element C$_{1}$ )
+       
+       C = C$_{1}$ x d$_{2}$

@@ -1,0 +1,34 @@
+(\lambda x. M) N = M [ x <- N ]
+
+\lambda x. M = \lambda y. M [ x <- y ]
+
+lemma:
+    if Mx = Nx such that x is not free in either M or N, then M = N
+    
+proof:
+    \lambda x. M x = \lambda x. N x   => M = N
+    
+(\lambda x. M) x = M
+(\lambda y. M [ x <- y ]) x = M
+
+\hline
+\alpha -> \beta -> \gamma = \alpha -> ( \beta -> \gamma )
+
+Combinator: closed \lambda-expression
+            => no free variables
+            
+  I = \lambda x . x                                     I N = N     Type: \alpha -> \alpha
+  K = \lambda x \lambda y . x                                       Type: \alpha -> ( \beta -> \alpha )
+  S = \lambda x \lambda y \lambda z . ( x z ) ( y z )               Type: \alpha -> ( \alpha -> \beta ) -> ( \alpha -> ( \beta -> \gamma ) ) -> \alpha
+  
+Theorem:
+  \forall F \reverseE X   F X = X
+  X = ( \lambda x. F( x x ) ) ( \lambda x. F( x x ))
+    = F( \lambda x. F( x x ))( \lambda x. F( x x )) 
+    = F( x )
+    
+\hline
+Searching for a model for \lambda-calculus (D):
+1) Application on D
+2) \lambda-abstraction
+   => \lambda x. M 
