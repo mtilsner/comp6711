@@ -1,53 +1,24 @@
 \section{Provide a denotational semantics for ``case'' statements as specified in Assignment 1.}
-\begin{align}
-	&	Cl \rightarrow Cl; n : St \\
-	& \dsstmt{Cl\text{ }e} = \dscond{\dsbool{n==e}}
-																 	{\dsstmt{St}}
-								 									{\dsstmt{Cl\text{ }e}}
-\end{align}
-And therefor:
-\begin{align}
-	& \dsstmt{Cl\text{ }e} \\
-= & \dsfix{F} \\
-	& \text{where } F g = \dscond{\dsbool{n==e}}
-															 {\dsstmt{St}}
-															 {g} 
-\end{align}
+\subsection{I $\rightarrow$ n : St}
+\begin{equation}
+	I.statechange = \lambda s. \lambda m. \left\{
+		\begin{array}{rl}
+			m = n		& St.statechange s \\
+			m \neq n	& id.statechange s
+		\end{array} \right.
+\end{equation}
 
-\begin{align}
-	& Cl \rightarrow n : St \\
-	& \dsstmt{Cl\text{ }e} = \dscond{\dsbool{n==e}}
-								 						{\dsstmt{St}}
-								 						{id}
-\end{align}
+\subsection{Cl $\rightarrow$ I}
+\begin{equation}
+	Cl.statechange = I.statechange
+\end{equation}
 
-\begin{align}
-	& Cs \rightarrow \text{case } E1\text{ of }Cl \\
-	& \dsstmt{Cs} = \dsstmt{Cl\text{ }E1}
-\end{align}
+\subsection{Cl$_0$ $\rightarrow$ Cl$_1$; I}
+\begin{equation}
+	Cl_0.statechange = \lambda s. \ I.statechange \ Cl_1.statechange \ s
+\end{equation}
 
-%\subsection{I $\rightarrow$ n : St}
-%\begin{align}
-%	& \dsstmt{n \backslash : St} \\
-%=	& \dsstmt{St} \circ \dsstmt{\backslash :} \circ \dsstms{n}
-%= &	\dsstmt{St} \circ id \circ id
-%\end{align}
-%
-%\subsection{Cl $\rightarrow$ I}
-%\begin{align}
-%	& \dsstmt{I} \\
-%=	& \dsstmt{St} \circ id \id
-%\end{align}
-%
-%\subsection{Cl$_0$ $\rightarrow$ Cl$_1$ : I}
-%\begin{align}
-%	& \dsstmt{Cl \backslash : I}
-%= & \dsstmt{I} \circ \dsstmt{\backslash :} \circ \dsstmt{Cl}
-%=
-%\end{align}
-%
-%Cs \rightarrow case E of Cl
-%
-%
-%
-%Cl \rightarrow I
+\subsection{\underline{case} E \underline{of} Cl}
+\begin{equation}
+	Cs.statechange = \lambda s. \ Cl.statechange \ s \ E.evaluate \ s
+\end{equation}
