@@ -53,10 +53,10 @@ order=6
 
 [item:exercises/exercise2.tex]
 archive=true
-column=138
+column=70
 encoding=UTF-8
 highlight=LaTeX
-line=41
+line=13
 open=true
 order=3
 
