@@ -81,22 +81,26 @@ The union of S$_{1}$ and S$_{2}$ would not directed, be since (C, D) does not ha
 \end{figure}
 
 \subsection{For every $d \in D$, the set $\{s \in D | s \leq d\}$ is directed.}
-\textbf{This statement is true}:
-
-Let $S$ be the set ${s \in D | s \leq d}$. \\
-Since $\exists s \in S$ for each $s \in D$ where $s \leq d$ and because that $d \in D$ and $d \leq d$,
-
-$\Rightarrow$ it must be that $d \in S$. \\
-Also, for each $s \in S$
-
-$\Rightarrow$ it must be that $s \leq d$.
-
-$\Rightarrow$ Therefore, $d \geq \sqcup s$ for each $s \in S$.
-
-$\Rightarrow$ Consequently $d \geq \sqcup (a, b)$ for each $(a, b) \in (S \times S)$, assuming that $x \geq \sqcup (y, z)$ if $x \geq \sqcup \{y, z\}$.
-
-
-$\Rightarrow$ Hence, $d$ is upper bound to all two elements of $S$, thus making $S$ directed.
+\textbf{This statement is true}. Let $S$ be the set $\{s \in D | s \leq d\}$. Let for this proof $\cap C$ stand for ``\emph{the set of upper bounds of C}'' and $\cap_D C$ for ``\emph{the set of upper bounds of $C$ in $D$}'' for $C \subseteq D$. Assuming that $S$ is not directed, it must be that
+\begin{align}
+	\exists (a,b) \mid a,b \in S
+\end{align}
+such that
+\begin{align}
+	\cap_S \{a,b\} = \emptyset \label{eq:dir:less:req}
+\end{align}
+Since
+\begin{align}
+	& S = \{s \in D | s \leq d\} \mid d \in D
+\end{align}
+it must be that
+\begin{align}
+						& \exists d \in D \mid \forall s_i \in S, d \leq s_i \\
+\Rightarrow &	d \leq a \text{ and } d \leq b \\
+\Rightarrow & d \in \cap_S \{a,b\} \\
+\Rightarrow & \cap_S \{a,b\} \neq \emptyset
+\end{align}
+contradicting equation \ref{eq:dir:less:req}. Consequently, $S$ must be directed!
 
 \subsection{For every $d \in D$, the set $\{s \in D | d \leq s\}$ is directed.}
 \textbf{This statement if false}. Consider the subset S$_3$ of the poset D from Figure \ref{img:ex1a:posetD} containing \{A, C, D\} as displayed in Figure \ref{img:ex1d:posetD}
