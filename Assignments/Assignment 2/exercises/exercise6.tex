@@ -4,7 +4,7 @@
 	I.statechange = \lambda s. \lambda m. \left\{
 		\begin{array}{rl}
 			m = n		& St.statechange( s ) \\
-			m \neq n	& id.statechange( s )
+			m \neq n	& s
 		\end{array} \right.
 \end{equation}
 
@@ -15,10 +15,10 @@
 
 \subsection{Cl$_0$ $\rightarrow$ Cl$_1$; I}
 \begin{equation}
-	Cl_0.statechange = \lambda s. \lambda m. I.statechange( Cl_1.statechange( s )( m ))( m )
+	Cl_0.statechange = \lambda s. \lambda m. (I.statechange \circ Cl_1.statechange( s ))( m )
 \end{equation}
 
 \subsection{\underline{case} E \underline{of} Cl}
 \begin{equation}
-	Cs.statechange = \lambda s. Cl.statechange( s )( E.evaluate( s ) )
+	Cs.statechange = \lambda s. (Cl.statechange( s ) \circ E.evaluate)( s )
 \end{equation}

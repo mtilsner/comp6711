@@ -1,50 +1,84 @@
 \section{Provide a denotational semantics for ``for'' loops given in Assignment 1.}
+% \subsection{old notation}
+% \begin{align}
+%     & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}  \\
+% =   & \dsstmt{i=0; \forloop{i=i+E_1}{E_2}{E_3}{St}}   \\
+% =   & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0} \\
+% =		& \dscond{\dsbool{i < E_2}}
+% 						 {\dsstmt{St: \forloop{i=i+E_1}{E_2}{E_3}{St}}}
+% 						 {\text{id}} 
+% 		  \circ \dsstmt{i=0} \\
+% =		& \dscond{\dsbool{i < E_2}}
+% 						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
+% 						 {\text{id}} 
+% 			\circ \dsstmt{i=0}
+% \end{align}
+% Therefore:
+% \begin{align}
+% 	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0} \\
+% =		& \dscond{\dsbool{i < E_2}}
+% 						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
+% 						 {\text{id}} 
+% 			\circ \dsstmt{i=0}
+% \end{align}
+% Or short:
+% \begin{align}
+% 	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \\
+% =		& \dscond{\dsbool{i < E_2}}
+% 						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
+% 						 {\text{id}} 
+% \end{align}
+% By expressing this as a fixed point of the functional $F$ we get
+% \begin{align}
+% 	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \\
+% =   & \dsfix{F} \\
+% 		& \text{where } F g = \dscond{\dsbool{i < E_2}}
+% 																 {g \circ \dsstmt{St}}
+% 																 {\text{id}} 
+% \end{align}
+% Since
+% \begin{align}
+%     & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}   \\
+% =   & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0}
+% \end{align}
+% We finally get for the denotational semantic of the \emph{for} loop:
+% \begin{align}
+%     & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}   \\
+% =   & \dsfix{F} \circ s[i \to \dsasgn{0}s] \\
+% 		& \text{where } F g = \dscond{\dsbool{i < E_2}}
+% 																 {g \circ \dsstmt{St}}
+% 																 {\text{id}} 
+% \end{align}
+% 
+% \subsection{``attribute grammar''-like notation}
+The for loop can for this scenario be rewritten as follows:
 \begin{align}
-    & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}  \\
-=   & \dsstmt{i=0; \forloop{i=i+E_1}{E_2}{E_3}{St}}   \\
-=   & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0} \\
-=		& \dscond{\dsbool{i < E_2}}
-						 {\dsstmt{St: \forloop{i=i+E_1}{E_2}{E_3}{St}}}
-						 {\text{id}} 
-		  \circ \dsstmt{i=0} \\
-=		& \dscond{\dsbool{i < E_2}}
-						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
-						 {\text{id}} 
-			\circ \dsstmt{i=0}
+	for	\to & \text{for } i := E_0 \text{ to } E_1 \text{ step } E_2 \text{ do } St \\
+			\to & init; loop
 \end{align}
-Therefore:
+where
 \begin{align}
-	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0} \\
-=		& \dscond{\dsbool{i < E_2}}
-						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
-						 {\text{id}} 
-			\circ \dsstmt{i=0}
+	init \to & i := 0 \\
+	inc	 \to & i = i+E_2 \\
+	loop \to & \text{while } i <= E_1 \text{ do } (St; inc)
 \end{align}
-Or short:
+Let S be the set of all statuses. The attribute ``sc'' is the statechange of elements, while ``eval'' evaluates expressions based on a given status. Consequently it must be that
 \begin{align}
-	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \\
-=		& \dscond{\dsbool{i < E_2}}
-						 {\dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{St}}
-						 {\text{id}} 
+	for.sc = & \lambda s \in S: (loop.sc \circ init.sc)( s ) \label{eq:for:whole}
 \end{align}
-By expressing this as a fixed point of the functional $F$ we get
+with
 \begin{align}
-	  & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \\
-=   & \dsfix{F} \\
-		& \text{where } F g = \dscond{\dsbool{i < E_2}}
-																 {g \circ \dsstmt{St}}
-																 {\text{id}} 
+	init.sc = & \lambda s \in S: s[i \gets 0] \\
+	inc.sc 	= & \lambda s \in S: s[i \gets s( i ) + E_2.eval( s )] \\
+	loop.sc = & \lambda s \in S: \dscond{i <= E_1}
+																			{(inc.sc \circ loop.sc \circ St.sc)( s )}
+																			{s} \\
+					= & \dsfix{F}\\
+where \ F = & \lambda g: \lambda s \in S: \dscond{i <= E_1}{(inc.sc \circ g \circ St.sc)( s )}{s} \\
+					= & \lambda g: \lambda s \in S: \dscond{i <= E_1}{((\lambda x \in S: x[i \gets x( i ) + E_2.eval( x )]) \circ g \circ St.sc)(s)}{s}
 \end{align}
-Since
+Putting these into equation \ref{eq:for:whole} results to the denotational semantics for the \emph{for} loop
 \begin{align}
-    & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}   \\
-=   & \dsstmt{\forloop{i=i+E_1}{E_2}{E_3}{St}} \circ \dsstmt{i=0}
-\end{align}
-We finally get for the denotational semantic of the \emph{for} loop:
-\begin{align}
-    & \dsstmt{\forloop{i=E1}{E_2}{E_3}{St}}   \\
-=   & \dsfix{F} \circ s[i \to \dsasgn{0}s] \\
-		& \text{where } F g = \dscond{\dsbool{i < E_2}}
-																 {g \circ \dsstmt{St}}
-																 {\text{id}} 
+	 for.sc = & \lambda s \in S: (\dsfix{F})(s[i \gets 0]) \\
+where \ F = & \lambda g: \lambda s \in S: \dscond{i <= E_1}{((\lambda x \in S: x[i \gets x( i ) + E_2.eval( x )]) \circ g \circ St.sc)(s)}{s}
 \end{align}

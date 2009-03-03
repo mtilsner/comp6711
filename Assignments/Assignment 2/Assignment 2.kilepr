@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=exercises/exercise2.tex
+lastDocument=exercises/exercise5.tex
 masterDocument=Assignment 2.tex
 name=Assignment 2
 pkg_extIsRegExp=false
@@ -80,18 +80,18 @@ order=-1
 
 [item:exercises/exercise5.tex]
 archive=true
-column=83
+column=89
 encoding=UTF-8
 highlight=LaTeX
-line=0
-open=false
+line=66
+open=true
 order=1
 
 [item:exercises/exercise6.tex]
 archive=true
-column=17
+column=19
 encoding=UTF-8
 highlight=LaTeX
-line=7
-open=false
-order=4
+line=6
+open=true
+order=0
