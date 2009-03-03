@@ -15,7 +15,7 @@
 
 \subsection{Cl$_0$ $\rightarrow$ Cl$_1$; I}
 \begin{equation}
-	Cl_0.statechange = \lambda s. I.statechange( Cl_1.statechange( s ) )
+	Cl_0.statechange = \lambda s. \lambda m. I.statechange( Cl_1.statechange( s )( m ))( m )
 \end{equation}
 
 \subsection{\underline{case} E \underline{of} Cl}
