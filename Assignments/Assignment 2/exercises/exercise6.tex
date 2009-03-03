@@ -3,8 +3,8 @@
 \begin{equation}
 	I.statechange = \lambda s. \lambda m. \left\{
 		\begin{array}{rl}
-			m = n		& St.statechange s \\
-			m \neq n	& id.statechange s
+			m = n		& St.statechange( s ) \\
+			m \neq n	& id.statechange( s )
 		\end{array} \right.
 \end{equation}
 
@@ -15,10 +15,10 @@
 
 \subsection{Cl$_0$ $\rightarrow$ Cl$_1$; I}
 \begin{equation}
-	Cl_0.statechange = \lambda s. \ I.statechange \ Cl_1.statechange \ s
+	Cl_0.statechange = \lambda s. I.statechange( Cl_1.statechange( s ) )
 \end{equation}
 
 \subsection{\underline{case} E \underline{of} Cl}
 \begin{equation}
-	Cs.statechange = \lambda s. \ Cl.statechange \ s \ E.evaluate \ s
+	Cs.statechange = \lambda s. Cl.statechange( s )( E.evaluate( s ) )
 \end{equation}

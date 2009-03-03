@@ -21,7 +21,7 @@ column=38
 encoding=UTF-8
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=0
 
 [item:Assignment 2.kilepr]
@@ -39,7 +39,7 @@ column=35
 encoding=UTF-8
 highlight=LaTeX
 line=15
-open=true
+open=false
 order=5
 
 [item:exercises/exercise1.tex]
@@ -48,16 +48,16 @@ column=24
 encoding=UTF-8
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=6
 
 [item:exercises/exercise2.tex]
 archive=true
-column=70
+column=82
 encoding=UTF-8
 highlight=LaTeX
 line=13
-open=true
+open=false
 order=3
 
 [item:exercises/exercise3.tex]
@@ -66,7 +66,7 @@ column=295
 encoding=UTF-8
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=2
 
 [item:exercises/exercise4.tex]
@@ -84,14 +84,14 @@ column=83
 encoding=UTF-8
 highlight=LaTeX
 line=0
-open=true
+open=false
 order=1
 
 [item:exercises/exercise6.tex]
 archive=true
-column=13
+column=17
 encoding=UTF-8
 highlight=LaTeX
 line=7
-open=true
+open=false
 order=4
