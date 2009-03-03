@@ -3,7 +3,20 @@
 \textbf{This statement is false}. Consider a partial order D as displayed in Figure \ref{img:ex1a:posetD}. The  $x \rightarrow y$ relation depicts a $x \leq y$ order.
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{exercises/figures/exercise1a-poset-D.png}
+		\begin{hassediagram}
+			\node[state] (A)                {$A$};
+			\node[state] (B) [right of=A]   {$B$};
+			\node[state] (C) [above of=A]   {$C$};
+			\node[state] (D) [above of=B]   {$D$};
+			\node[state] (E) [above of=C]   {$E$};
+			\path[->] 
+				(A) edge (C)
+						edge (D)
+				(C) edge (E) 
+				(D) edge (E)
+				(B) edge (C)
+						edge (D);
+		\end{hassediagram}
     \caption{Partially orderd set D}
     \label{img:ex1a:posetD}
   \end{center}
@@ -12,11 +25,25 @@ Let there be two subsets S$_{1}$ = \{A, B, C\} and S$_{2}$ = \{A, B, D\} as disp
 \begin{figure}[htbp]
 	\begin{center}
 	 	\subfigure[Subset S$_{1}$]{
-  	 	\includegraphics{exercises/figures/exercise1a-subset-S1.png}
+			\begin{hassediagram}
+				\node[state] (A)                {$A$};
+				\node[state] (B) [right of=A]   {$B$};
+				\node[state] (C) [above of=A]   {$C$};
+				\path[->] 
+					(A) edge (C)
+					(B) edge (C);
+			\end{hassediagram}
    		\label{img:ex1a:subsetS1}
 		}
 		\subfigure[Subset S$_{2}$]{
-   		\includegraphics{exercises/figures/exercise1a-subset-S2.png}
+			\begin{hassediagram}
+				\node[state] (A)                {$A$};
+				\node[state] (B) [right of=A]   {$B$};
+				\node[state] (D) [above of=B]   {$D$};
+				\path[->] 
+					(A) edge (D)
+					(B) edge (D);
+			\end{hassediagram}
 	   	\label{img:ex1a:subsetS2}
 		}
 	\end{center}
@@ -24,7 +51,17 @@ Let there be two subsets S$_{1}$ = \{A, B, C\} and S$_{2}$ = \{A, B, D\} as disp
 The union of S$_{1}$ and S$_{2}$ would not directed, be since (C, D) does not have an upper bound in $S_{1} \cup S_{2}$ as displayed in Figure \ref{img:ex1a:union}
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{exercises/figures/exercise1a-union-S1-S2.png}
+		\begin{hassediagram}
+			\node[state] (A)                {$A$};
+			\node[state] (B) [right of=A]   {$B$};
+			\node[state] (C) [above of=A]   {$C$};
+			\node[state] (D) [above of=B]   {$D$};
+			\path[->] 
+				(A) edge (C)
+						edge (D)
+				(B) edge (C)
+						edge (D);
+		\end{hassediagram}
     \caption{Union of S$_{1}$ and S$_{2}$}
     \label{img:ex1a:union}
   \end{center}
@@ -34,7 +71,10 @@ The union of S$_{1}$ and S$_{2}$ would not directed, be since (C, D) does not ha
 \textbf{This statement is false}. Considering the two subsets S$_{1}$ and S$_{2}$ from 1a, the intersection would be \{A, B\} as displayed in Figure \ref{img:ex1b:intersection}. Obviously, these two elements do not have an upper bound in $S_{1} \cap S_{2}$.
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{exercises/figures/exercise1b-intersect-S1-S2.png}
+		\begin{hassediagram}
+			\node[state] (A)                {$A$};
+			\node[state] (B) [right of=A]   {$B$};
+		\end{hassediagram}
     \caption{Intersection of S$_{1}$ and S$_{2}$}
     \label{img:ex1b:intersection}
   \end{center}
@@ -59,12 +99,19 @@ $\Rightarrow$ Consequently $d \geq \sqcup (a, b)$ for each $(a, b) \in (S \times
 $\Rightarrow$ Hence, $d$ is upper bound to all two elements of $S$, thus making $S$ directed.
 
 \subsection{For every $d \in D$, the set $\{s \in D | d \leq s\}$ is directed.}
-\textbf{This statement if false}. Consider a poset D as displayed in Figure \ref{img:ex1d:posetD}
+\textbf{This statement if false}. Consider the subset S$_3$ of the poset D from Figure \ref{img:ex1a:posetD} containing \{A, C, D\} as displayed in Figure \ref{img:ex1d:posetD}
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{exercises/figures/exercise1d-poset-D.png}
-    \caption{Partially ordered set D}
+		\begin{hassediagram}
+			\node[state] (A)                {$A$};
+			\node[state] (C) [above of=A]   {$C$};
+			\node[state] (D) [right of=C]   {$D$};
+			\path[->] 
+				(A) edge (C)
+						edge (D);
+		\end{hassediagram}
+    \caption{Subset S$_3$}
     \label{img:ex1d:posetD}
   \end{center}
 \end{figure}
-The statement does allow choosing A for $d$ which would result in the entire poset. Consequently, the poset itself would need to be directed. Obviously, B and C have no upper bound, thus the poset is not directed.
+The statement does allow choosing A for $d$ which would result in the entire poset. Consequently, the poset itself would need to be directed. Obviously, C and D have no upper bound, thus the poset is not directed.

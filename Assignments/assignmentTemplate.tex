@@ -45,3 +45,9 @@
    {\usepackage[subfigure,titles]{tocloft}}
    {\usepackage[titles]{tocloft}}
 }
+
+\usepackage{tikz}
+\usetikzlibrary{automata}
+\newenvironment{hassediagram}
+	{\begin{tikzpicture}[node distance=2cm,auto]}
+	{\end{tikzpicture}}
