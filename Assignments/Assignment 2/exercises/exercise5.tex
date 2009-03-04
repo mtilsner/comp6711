@@ -58,7 +58,7 @@ The for loop can for this scenario be rewritten as follows:
 \end{align}
 where
 \begin{align}
-	init \to & i := 0 \\
+	init \to & i := E_0 \\
 	inc	 \to & i = i+E_2 \\
 	loop \to & \text{while } i <= E_1 \text{ do } (St; inc)
 \end{align}
@@ -68,7 +68,7 @@ Let S be the set of all statuses. The attribute ``sc'' is the statechange of ele
 \end{align}
 with
 \begin{align}
-	init.sc = & \lambda s \in S: s[i \gets 0] \\
+	init.sc = & \lambda s \in S: s[i \gets E_0.eval( s )] \\
 	inc.sc 	= & \lambda s \in S: s[i \gets s( i ) + E_2.eval( s )] \\
 	loop.sc = & \lambda s \in S: \dscond{i <= E_1}
 																			{(inc.sc \circ loop.sc \circ St.sc)( s )}
@@ -79,6 +79,6 @@ where \ F = & \lambda g: \lambda s \in S: \dscond{i <= E_1}{(inc.sc \circ g \cir
 \end{align}
 Putting these into equation \ref{eq:for:whole} results to the denotational semantics for the \emph{for} loop
 \begin{align}
-	 for.sc = & \lambda s \in S: (\dsfix{F})(s[i \gets 0]) \\
+	 for.sc = & \lambda s \in S: (\dsfix{F})(s[i \gets E_0.eval( s )]) \\
 where \ F = & \lambda g: \lambda s \in S: \dscond{i <= E_1}{((\lambda x \in S: x[i \gets x( i ) + E_2.eval( x )]) \circ g \circ St.sc)(s)}{s}
 \end{align}
