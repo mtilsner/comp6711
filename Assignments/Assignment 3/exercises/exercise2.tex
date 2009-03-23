@@ -1,0 +1,17 @@
+\section{Show that, for all lambda expressions M, N $(\lambda y. (\lambda x. M)) N = \lambda x. ((\lambda y. M) N)$}
+It is to be proven that
+\begin{align}
+	(\lambda y. (\lambda x. M)) N \stackrel{?}{=} \lambda x. ((\lambda y. M) N) \label{e2}
+\end{align}
+For the left side it is that
+\begin{align}
+	(\lambda y. (\lambda x. M)) N &= (\lambda y. \lambda x. M) N \\
+																&= (\lambda x. M) [y \leftarrow N] \\
+																&= \lambda x. M [y \leftarrow N] \label{e2:left}
+\end{align}
+For the right side it is that
+\begin{align}
+	\lambda x. ((\lambda y. M) N) &= \lambda x. (M [y \leftarrow N]) \\
+																&= \lambda x. M [y \leftarrow N] \label{e2:right}
+\end{align}
+Since equation \ref{e2:left} equals to equation \ref{e2:right}, it is that equation \ref{e2} must be true.

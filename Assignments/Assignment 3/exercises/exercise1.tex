@@ -1,0 +1,30 @@
+\section{Prove lamdba expressions}
+\subsection{$\textbf{I} M = M$}
+\begin{align}
+							\textbf{I}	&= \lambda x. x \\
+\Rightarrow	\textbf{I} M	&= (\lambda x. x) M \\
+													&= x [x \leftarrow M] \\
+													&= M
+\end{align}
+
+\subsection{$\textbf{K} M N = M$}
+\begin{align}
+								 \textbf{K} &= \lambda x. \lambda y. x \\
+\Rightarrow	\textbf{K} M	N &= (\lambda x. \lambda y. x) M N \\
+														&= (\lambda y. x) [x \leftarrow M] N \\
+														&= (\lambda y. M) N \\
+														&= M [y \leftarrow N] \\
+														&= M
+\end{align}
+
+\subsection{$\textbf{S} M N L = M L ( N L )$}
+\begin{align}
+									 \textbf{S}	&= \lambda x. \lambda y. \lambda z. x z ( y z ) \\
+\Rightarrow	\textbf{S} M	N L	&= (\lambda x. \lambda y. \lambda z. x z ( y z )) M N L \\
+															&= (\lambda y. \lambda z. x z ( y z )) [x \leftarrow M] N L \\
+															&= (\lambda y. \lambda z. M z ( y z )) N L \\
+															&= (\lambda z. M z ( y z )) [y \leftarrow N] L \\
+															&= (\lambda z. M z ( N z )) L \\
+															&= M z ( N z ) [z \leftarrow L] \\
+															&= M L ( N L )
+\end{align}

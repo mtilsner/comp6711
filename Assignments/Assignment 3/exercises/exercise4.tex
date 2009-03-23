@@ -1,0 +1,110 @@
+\section{Exercise 11.47}
+\subsection{Prove the successor function for zero to two}
+For (successor zero) = one
+\begin{align}
+							 zero	&= \lambda f. \lambda x. x \\
+					successor	&= \lambda n. \lambda f. \lambda x. (f ((n f) x)) \\
+		successor(zero)	&= (\lambda n. \lambda f. \lambda x. (f ((n f) x))) (\lambda f. \lambda x. x) \\
+										&= (\lambda f. \lambda x. (f ((n f) x))) [n \leftarrow (\lambda f. \lambda x. x)] \\
+										&= \lambda f. \lambda x. (f (((\lambda f'. \lambda x'. x') f) x)) \\
+										&= \lambda f. \lambda x. (f ((\lambda x'. x') [f' \leftarrow f] x)) \\
+										&= \lambda f. \lambda x. (f ((\lambda x'. x') x)) \\
+										&= \lambda f. \lambda x. (f (x' [x' \leftarrow x])) \\
+										&= \lambda f. \lambda x. (f (x)) \\ 
+										&= \lambda f. \lambda x. (f x) \\
+										&= one
+\end{align}
+\emph{Q.E.D.}
+\\
+For (successor one) = two
+\begin{align}
+								one	&= \lambda f. \lambda x. (f x) \\
+					successor	&= \lambda n. \lambda f. \lambda x. (f ((n f) x)) \\
+		 successor(one)	&= (\lambda n. \lambda f. \lambda x. (f ((n f) x))) (\lambda f. \lambda x. (f x)) \\
+										&= (\lambda f. \lambda x. (f ((n f) x))) [n \leftarrow (\lambda f. \lambda x. (f x))] \\
+										&= \lambda f. \lambda x. (f (((\lambda f'. \lambda x'. (f' x')) f) x)) \\
+										&= \lambda f. \lambda x. (f (((\lambda x'. (f' x')) [f' \leftarrow f]) x)) \\
+										&= \lambda f. \lambda x. (f ((\lambda x'. (f x')) x)) \\
+										&= \lambda f. \lambda x. (f ((f x') [x' \leftarrow x])) \\
+										&= \lambda f. \lambda x. (f (f x)) \\
+										&= two
+\end{align}
+\emph{Q.E.D.}
+
+\subsection{Generalization of the successor function}
+Let the general lambda abstraction for numbers be
+\begin{align}
+			church_n = \lambda f. \lambda x. (f^{n} x) \label{e4:church:def}
+\end{align}
+Such that
+\begin{align}
+ 						f^{0}(x) &= x \\
+						f^{1}(x) &= f(x) \\
+						f^{2}(x) &= f(f(x)) \\
+						f^{3}(x) &= f(f(f(x))) \\
+						... \\
+					f^{n+1}(x) &= f(f^{n}(x))
+\end{align}
+For the successor function this requires
+\begin{align}
+ 	successor(church_n) = church_{n+1}
+\end{align}
+such that
+\begin{align}
+					 church_n	&= \lambda f. \lambda x. (f^{n} x) \\
+successor(church_n)	&= \lambda n. \lambda f. \lambda x. (f ((n f) x)) \\
+										&= (\lambda f. \lambda x. (f ((n f) x))) (\lambda f. \lambda x. (f^{n} x)) \\
+										&= (\lambda f. \lambda x. (f ((n f) x))) [n \leftarrow (\lambda f. \lambda x. (f^{n} x))] \\
+										&= \lambda f. \lambda x. (f (((\lambda f'. \lambda x'. (f'^{n} x')) f) x)) \\
+										&= \lambda f. \lambda x. (f (((\lambda x'. (f'^{n} x')) [f' \leftarrow f]) x)) \\
+										&= \lambda f. \lambda x. (f ((\lambda x'. (f^{n} x')) x)) \\
+										&= \lambda f. \lambda x. (f ((f^{n} x') [x' \leftarrow x])) \\
+										&= \lambda f. \lambda x. (f (f^{n} x)) \\
+										&= \lambda f. \lambda x. (f^{n+1} x) \\
+										&= church_{n+1}
+\end{align}
+\emph{Q.E.D.}
+
+\subsection{Define addition and multiplication for Church numbers}
+The addition for Church numbers can be defined as
+\begin{align}
+	add	&= \lambda m. \lambda n. \lambda f. \lambda x. (m f) (n f x) \label{eq4:add:proof}
+\end{align}
+Due to equation \ref{e4:church:def}, it must be that
+\begin{align}
+						church_m + church_n &= church_{m+n} \\
+\Rightarrow \lambda f. \lambda x. (f^{m} x) + \lambda f. \lambda x. (f^{n} x)
+																&= \lambda f. \lambda x. (f^{n+m} x) \\
+																&= \lambda f. \lambda x. (f^{n}(f^{m} x))
+\end{align}
+In order for equation \ref{eq4:add:proof} to be true, it must be that
+\begin{align}
+		add(church_m, church_n) = church_{m+n}
+\end{align}
+This can be proven as follows:
+\begin{align}
+							church_m &= \lambda f. \lambda x. (f^{m} x) \\
+							church_n &= \lambda f. \lambda x. (f^{n} x) \\
+add(church_m,church_n) &= (\lambda m. \lambda n. \lambda f. \lambda x. (m f) (n f x)) (\lambda f. \lambda x. (f^{m} x)) (\lambda f. \lambda x. (f^{n} x)) \\
+											 &= (\lambda n. \lambda f. \lambda x. (m f) (n f x)) [m \leftarrow (\lambda f. \lambda x. (f^{m} x))] (\lambda f. \lambda x. (f^{n} x)) \\
+											 &= (\lambda n. \lambda f. \lambda x. ((\lambda f'. \lambda x'. (f'^{m} x')) f) (n f x)) (\lambda f. \lambda x. (f^{n} x)) \\
+											 &= (\lambda n. \lambda f. \lambda x. ((\lambda x'. (f'^{m} x')) [f' \leftarrow f]) (n f x)) (\lambda f. \lambda x. (f^{n} x)) \\
+											 &= (\lambda n. \lambda f. \lambda x. (\lambda x'. (f^{m} x')) (n f x)) (\lambda f. \lambda x. (f^{n} x)) \\
+											 &= (\lambda f. \lambda x. (\lambda x'. (f^{m} x')) (n f x)) [n \leftarrow (\lambda f. \lambda x. (f^{n} x)) \\
+											 &= \lambda f. \lambda x. (\lambda x'. (f^{m} x')) ((\lambda f''. \lambda x''. (f''^{n} x'')) f x) \\
+											 &= \lambda f. \lambda x. (\lambda x'. (f^{m} x')) ((\lambda x''. (f''^{n} x'')) [f'' \leftarrow f] x) \\
+											 &= \lambda f. \lambda x. (\lambda x'. (f^{m} x')) ((\lambda x''. (f^{n} x'')) x) \\
+											 &= \lambda f. \lambda x. (\lambda x'. (f^{m} x')) ((f^{n} x'') [x'' \leftarrow x]) \\
+											 &= \lambda f. \lambda x. (\lambda x'. (f^{m} x')) (f^{n} x) \\
+											 &= \lambda f. \lambda x. (f^{m} x') [x' \leftarrow (f^{n} x)] \\
+											 &= \lambda f. \lambda x. (f^{m}(f^{n} x)) \\
+											 &= \lambda f. \lambda x. (f^{m+n} x) \\
+											 &= church_{m+n}
+\end{align}
+\emph{Q.E.D.}
+\\
+The multiplication for Church numbers can be easily defined using the $add$ function
+\begin{align}
+	mult = \lambda m. \lambda n. \lambda f. \lambda x. (m (add (n f x))) x
+\end{align}
+The proof for this function can be provided analog to the one for the addition. However, since it requires verbose equations, it will be omitted at this point.
