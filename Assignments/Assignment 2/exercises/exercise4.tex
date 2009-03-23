@@ -1,2 +1,120 @@
-\section{A partially ordered set $D$ is a complete lattice if every subset S of D has a least upper bound $\sqcup S$. Show that in a complete lattice $D$, an element $e$ is compact if and only if for all $S \subseteq D$: $e \leq \sqcup S$ implies $e \leq \sqcup X$ for some finite $X \subseteq S$.}
-%$S$ can either be infinite or finite. In case of a finite set, 
+\section{A partially ordered set $D$ is a complete lattice if every subset $S$ of $D$ has a least upper bound $\sqcup S$. Show that in a complete lattice $D$, an element $e$ is compact if and only if for all $S \subseteq D$: $e \leq \sqcup S$ implies $e \leq \sqcup X$ for some finite $X \subseteq S$.}
+\subsection{Introduction}
+Let $A$ be the set of all subsets of $D$ and $C$ be the set of all subsets of $D$ that are ascending chains such that
+\begin{align}
+	& A \subseteq D \\
+	& C \subseteq D \\
+	& C \subseteq A 			\label{eq:cola:def:ca}
+\end{align}
+It has to be proven that
+\begin{align}
+	\textbf{iff }		& \forall S_A \in A: \forall e \leq \sqcup S_A,
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X \\
+	\textbf{then }	& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										\exists s \in S_C \text{ such that } e \leq s
+\end{align}
+for this to be true, two theorems can be deducted that have to be proven:
+
+\subsection{Theorem A}
+\begin{align}
+	\textbf{if }		& \forall S_A \in A: \forall e \leq \sqcup S_A,
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X \\
+	\textbf{then }	& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										\exists s \in S_C \text{ such that } e \leq s
+\end{align}
+
+\subsection{Theorem B}
+\begin{align}
+	\textbf{if }		& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										\exists s \in S_C \text{ such that } e \leq s \\
+	\textbf{then }	& \forall S_A \in A: \forall e \leq \sqcup S_A ,
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X
+\end{align}
+
+\subsection{Proof}
+\subsubsection{Proof of Theorem A}
+Due to equation \ref{eq:cola:def:ca}, it must be that by satisfying a condition for all $S_A \subseteq A$, it will be satisfied for all $S_C \subseteq C$, too. Consequently it must be that
+\begin{align}
+	\textbf{if }		& \forall S_A \in A: \forall e \leq \sqcup S_A, 																		\label{eq:cola:pt1:st}
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X \\
+	\textbf{then }	& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										\exists \text{ finit } X \subseteq S_C \text{ such that } e \leq \sqcup X \\			\label{eq:cola:pt1:en}
+\end{align}
+Since $C$ is a set of ascending chains, it must be that for all finite $X \subseteq S_C$
+\begin{align}
+						& \exists x \in X = \sqcup X \\
+\Rightarrow & \exists x \in S_C = \sqcup X
+\end{align}
+Therefore
+\begin{align}
+						&	e \leq \sqcup X \text{ for some finite } X \subseteq S_C \\
+\Rightarrow	& e \leq x \text{ for some } x \in \text{ some finite } X \subseteq S_C \\
+\Rightarrow & e \leq x \text{ for some } x \in S_C
+\end{align}
+such that 
+\begin{align}
+	\textbf{if }		& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										exists \text{ finit } X \subseteq S_C \text{ such that } e \leq \sqcup X \\
+	\textbf{then }	& \forall S_C \in C: \forall e_C \leq \sqcup S_C,
+										\exists s \in S_C \text{ such that } e \leq s 
+\end{align}
+Due to equation \ref{eq:cola:pt1:st} to \ref{eq:cola:pt1:en}, it must therefore be that
+\begin{align}
+	\textbf{if }		& \forall S_A \in A: \forall e \leq \sqcup S_A,
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X \\
+	\textbf{then }	& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										\exists s \in S_C \text{ such that } e \leq s
+\end{align}
+\emph{Q.E.D}. Consequently, Theorem A is true!
+
+\subsubsection{Proof of Theorem B}
+For Theorem B to be true it must be that
+\begin{align}
+	\textbf{if }		& \forall S_C \in C: \forall e \leq \sqcup S_C,																	\label{eq:cola:pt2:st}
+										\exists s \in S_C \text{ such that } e \leq s \\
+	\textbf{then }	& \forall S_A \in A: \forall e \leq \sqcup S_A,
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X			\label{eq:cola:pt2:en}
+\end{align}
+For every subset $S_A \in A$: Let $Y$ be the set of all $\{s_i,s_j\}$ with $s_i,s_j \in S_A$ such that $ \{s_i,s_j\} \subseteq S_A$. Let furthermore be $Y_b = \bigcup_{\forall y \in Y} \{\sqcup y\}$. It must then be that
+\begin{align}
+						& \sqcup S_A = \sqcup Y_b
+\end{align}
+and since $D$ is a complete lattice
+\begin{align}
+						& \forall d_i,d_j \in D, \exists \sqcup \{d_i,d_j\} \in D \\
+\Rightarrow	&	\forall y_i,y_j \in Y_u, \exists \sqcup \{y_i,y_j\} \in (Y_u \cup \sqcup S_A)
+\end{align}
+this means furthermore that $(Y_b \cup \sqcup S_A)$ is a directed. All subsets of a complete lattice that are directed chains, can be expanded to consist of purley ascending chains by
+Since every directed set always contains at least one ascending chain with the same supremum, it must be that there exists an ascending chain $Y_c \subseteq Y_b$ such that
+\begin{align}
+						& \sqcup Y_c = \sqcup S_A \\
+						& S_A \in C
+\end{align}
+and due to equation \ref{eq:cola:pt2:st} it must then be that 
+\begin{align}
+						& \forall e \leq \sqcup S_A, e \leq \sqcup Y_c \\
+\Rightarrow & \forall e \leq \sqcup S_A, \exists s \in Y_c \text{ such that } e \leq s \\
+\Rightarrow & \forall e \leq \sqcup S_A, \exists s \in Y_b \text{ such that } e \leq s
+\end{align}
+Since $Y_b = \bigcup_{\forall y \in Y} \sqcup y$, it must be that
+\begin{align}
+						& \forall s \in Y_b, \exists y \in Y \text{ such that } s \in y \\
+\Rightarrow	&	\forall e \leq \sqcup S_A, \exists y \in Y, \text{ such that } \sqcup y \leq e
+\end{align}
+and since every entry $y \in Y$ is a finite $\{s_i,s_j\} \subseteq S_A$, it must be that
+\begin{align}
+						& \exists \text{ finite } X \subseteq S_A = y \text{ such that:} \\
+\Rightarrow	&	\forall e \leq \sqcup S_A, e \leq X \\
+\Rightarrow & \forall e \leq \sqcup S_A, \exists \text{ finite } X \text{ such that } e \leq \sqcup X
+\end{align}
+Consequently, equation \ref{eq:cola:pt2:en} is true under the condition of equation \ref{eq:cola:pt2:st} such that
+\begin{align}
+	\textbf{if }		& \forall S_C \in C: \forall e \leq \sqcup S_C,
+										\exists s \in S_C \text{ such that } e \leq s \\
+	\textbf{then }	& \forall S_A \in A: \forall e \leq \sqcup S_A,
+										\exists \text{ finit } X \subseteq S_A \text{ such that } e \leq \sqcup X
+\end{align}
+\emph{Q.E.D.}. Consequently, Theorem B is true!
+
+\subsection{Conclusion}
+Since both Theorem A and Theorem B were proven to be true, it original statement from the introduction is correct!
